@@ -4,9 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kanban Board</title>
-  <script src="https://cdn.tailwind.com"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="kanban-board.css">
+
   <script>
     tailwind.config = {
       theme: {
@@ -51,77 +53,77 @@
       },
     };
   </script>
-  <link rel="stylesheet" href="kanban-board.css">
+
 </head>
-<body>
-  <header>
-    <div>
-      <div>
-        <i aria-hidden="true"></i>
+<body class="bg-base-950 text-base-100 min-h-screen flex flex-col">
+  <header class="sticky top-0 z-50 flex items-center justify-between gap-3 px-6 py-4 bg-base-900 border-b border-base-600">
+    <div class="flex items-center gap-2.5 shrink-0">
+      <div class="w-8 h-8 rounded-lg bg-accent flex items-center justify-center">
+        <i aria-hidden="true" class="ti ti-layout-kanban text-white text-lg"></i>
       </div>
       <div>
-        <div id="board-name-display">My Workspace</div>
-        <div>Kanban Board</div>
+        <div id="board-name-display" class="text-base font-semibold tracking-tight">My Workspace</div>
+        <div class="text-[11px] text-base-300 font-mono uppercase tracking-widest">Kanban Board</div>
       </div>
     </div>
 
-    <div id="board-tabs"></div>
+    <div id="board-tabs" class="flex gap-1 items-center flex-1 overflow-x-auto"></div>
 
-    <div>
-      <button><i aria-hidden="true"></i>New Board</button>
-      <button><i aria-hidden="true"></i>Add Task</button>
+    <div class="flex items-center gap-2 shrink-0">
+      <button class="flex items-center gap-1.5 px-3.5 py-1.5 text-[13px] font-medium rounded-lg border border-base-600 bg-base-800 text-base-300 hover:bg-base-700 hover:text-base-100 hover:border-base-500 transition-colors"><i aria-hidden="true"></i>New Board</button>
+      <button class="flex items-center gap-1.5 px-3.5 py-1.5 text-[13px] font-medium rounded-lg bg-accent hover:bg-accent-hover text-white transition-colors"><i aria-hidden="true"></i>Add Task</button>
     </div>
   </header>
 
-  <div id="stats-bar"></div>
+  <div id="stats-bar" class="flex flex-wrap gap-6 px-6 py-3.5 bg-base-900 border-b border-base-600 text-[13px] text-base-300"></div>
 
-  <main>
-    <div id="board"></div>
+  <main class="flex-1 p-6 overflow-x-auto">
+    <div id="board" class="flex gap-5 min-w-max items-start"></div>
   </main>
 
-  <div id="quick-add-modal">
-    <div>
-      <div>
-        <span>Quick add task</span>
-        <button><i></i></button>
+  <div id="quick-add-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center">
+    <div class="bg-base-900 border border-base-500 rounded-xl w-[420px] max-w-[90vw] animate-popIn">
+      <div class="flex items-center justify-between px-5 pt-[18px] pb-3.5 border-b border-base-600">
+        <span class="text-[15px] font-semibold">Quick add task</span>
+        <button class="w-7 h-7 flex items-center justify-center rounded-md text-base-400 hover:bg-base-700 hover:text-base-300 transition-colors"><i class="ti ti-x text-base"></i></button>
       </div>
-      <div>
+      <div class="p-5 space-y-4">
         <div>
-          <label for="qa-title">Title</label>
-          <input id="qa-title" placeholder="What needs to be done?" autocomplete="off">
+          <label for="qa-title" class="block text-[11px] font-mono uppercase tracking-wider text-base-300 mb-1.5">Title</label>
+          <input id="qa-title" placeholder="What needs to be done?" autocomplete="off" class="w-full bg-base-800 border border-base-600 focus:border-accent rounded-lg px-3 py-2.5 text-sm text-base-100 placeholder-base-400 outline-none transition-colors">
         </div>
         <div>
-          <label>Priority</label>
-          <select id="qa-priority">
+          <label class="block text-[11px] font-mono uppercase tracking-wider text-base-300 mb-1.5">Priority</label>
+          <select id="qa-priority" class="w-full bg-base-800 border border-base-600 focus:border-accent rounded-lg px-3 py-2.5 text-sm text-base-100 outline-none transition-colors">
             <option value="low">Low</option>
             <option value="medium" selected>Medium</option>
             <option value="high">High</option>
           </select>
         </div>
         <div>
-          <label for="qa-due">Due Date</label>
-          <input type="date" id="qa-due">
+          <label for="qa-due" class="block text-[11px] font-mono uppercase tracking-wider text-base-300 mb-1.5">Due Date</label>
+          <input type="date" id="qa-due" class="w-full bg-base-800 border border-base-600 focus:border-accent rounded-lg px-3 py-2.5 text-sm text-base-100 outline-none transition-colors">
         </div>
-        <div>
-          <button>Cancel</button>
-          <button>Add task</button>
+        <div class="flex justify-end gap-2 pt-1">
+          <button class="px-3 py-1.5 text-[13px] text-base-400 border border-base-600 rounded-lg hover:text-base-300 transition-colors">Cancel</button>
+          <button class="px-4 py-1.5 text-[13px] font-medium bg-accent hover:bg-accent-hover text-white rounded-lg transition-colors">Add task</button>
         </div>
       </div>
     </div>
   </div>
 
-  <div id="new-board-modal">
-    <div>
-      <div>
-        <span>New board</span>
-        <button><i></i></button>
+  <div id="new-board-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center">
+    <div class="bg-base-900 border border-base-500 rounded-xl w-[420px] max-w-[90vw] animate-popIn">
+      <div class="flex items-center justify-between px-5 pt-[18px] pb-3.5 border-b border-base-600">
+        <span class="text-[15px] font-semibold">New board</span>
+        <button class="w-7 h-7 flex items-center justify-center rounded-md text-base-400 hover:bg-base-700 hover:text-base-300 transition-colors"><i class="ti ti-x text-base"></i></button>
       </div>
-      <div>
-        <label for="new-board-name">Board name</label>
-        <input id="new-board-name" placeholder="e.g. Q3 Roadmap" autocomplete="off">
-        <div>
-          <button>Cancel</button>
-          <button>Create board</button>
+      <div class="p-5">
+        <label for="new-board-name" class="block text-[11px] font-mono uppercase tracking-wider text-base-300 mb-1.5">Board name</label>
+        <input id="new-board-name" placeholder="e.g. Q3 Roadmap" autocomplete="off" class="w-full bg-base-800 border border-base-600 focus:border-accent rounded-lg px-3 py-2.5 text-sm text-base-100 placeholder-base-400 outline-none transition-colors mb-5">
+        <div class="flex justify-end gap-2">
+          <button class="px-3 py-1.5 text-[13px] text-base-400 border border-base-600 rounded-lg hover:text-base-300 transition-colors">Cancel</button>
+          <button class="px-4 py-1.5 text-[13px] font-medium bg-accent hover:bg-accent-hover text-white rounded-lg transition-colors">Create board</button>
         </div>
       </div>
     </div>
