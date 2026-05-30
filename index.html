@@ -54,7 +54,78 @@
   <link rel="stylesheet" href="kanban-board.css">
 </head>
 <body>
-  
+  <header>
+    <div>
+      <div>
+        <i aria-hidden="true"></i>
+      </div>
+      <div>
+        <div id="board-name-display">My Workspace</div>
+        <div>Kanban Board</div>
+      </div>
+    </div>
+
+    <div id="board-tabs"></div>
+
+    <div>
+      <button><i aria-hidden="true"></i>New Board</button>
+      <button><i aria-hidden="true"></i>Add Task</button>
+    </div>
+  </header>
+
+  <div id="stats-bar"></div>
+
+  <main>
+    <div id="board"></div>
+  </main>
+
+  <div id="quick-add-modal">
+    <div>
+      <div>
+        <span>Quick add task</span>
+        <button><i></i></button>
+      </div>
+      <div>
+        <div>
+          <label for="qa-title">Title</label>
+          <input id="qa-title" placeholder="What needs to be done?" autocomplete="off">
+        </div>
+        <div>
+          <label>Priority</label>
+          <select id="qa-priority">
+            <option value="low">Low</option>
+            <option value="medium" selected>Medium</option>
+            <option value="high">High</option>
+          </select>
+        </div>
+        <div>
+          <label for="qa-due">Due Date</label>
+          <input type="date" id="qa-due">
+        </div>
+        <div>
+          <button>Cancel</button>
+          <button>Add task</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="new-board-modal">
+    <div>
+      <div>
+        <span>New board</span>
+        <button><i></i></button>
+      </div>
+      <div>
+        <label for="new-board-name">Board name</label>
+        <input id="new-board-name" placeholder="e.g. Q3 Roadmap" autocomplete="off">
+        <div>
+          <button>Cancel</button>
+          <button>Create board</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <script src="kanban-board.js"></script>
 </body>
 </html>
