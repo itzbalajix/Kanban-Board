@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kanban Board</title>
+  <script src="https://cdn.tailwind.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['DM Sans', 'sans-serif'],
+            mono: ['DM Mono', 'monospace'],
+          },
+          colors: {
+            base: {
+              950: '#0f1117',
+              900: '#161b27',
+              800: '#1e2536',
+              700: '#252d40',
+              600: '#2e3650',
+              500: '#3d4a6b',
+              400: '#4d5b7c',
+              300: '#8892b0',
+              200: '#c2c8da',
+              100: '#e8eaf2',
+            },
+            accent: {
+              DEFAULT: '#6c7ef8',
+              hover:   '#5468e7',
+            },
+          },
+          keyframes: {
+            slideIn: {
+              '0%':   { opacity: '0', transform: 'translateY(-6px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            popIn: {
+              '0%':   { opacity: '0', transform: 'scale(0.95) translateY(-4px)' },
+              '100%': { opacity: '1', transform: 'scale(1) translateY(0)' },
+            },
+          },
+          animation: {
+            slideIn: 'slideIn 0.2s ease',
+            popIn:   'popIn 0.15s ease',
+          },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="kanban-board.css">
+</head>
+<body>
+  
+  <script src="kanban-board.js"></script>
+</body>
+</html>
