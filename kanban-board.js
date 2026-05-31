@@ -396,3 +396,29 @@ function submitColForm(colId) {
   renderStats();
   colFormOpen = null;
 }
+
+function openAddTask() {
+  document.getElementById('quick-add-modal').classList.remove('hidden');
+  document.getElementById('quick-add-modal').classList.add('flex');
+  document.getElementById('qa-title').focus();
+}
+
+function closeAddTask() {
+  document.getElementById('quick-add-modal').classList.add('hidden');
+  document.getElementById('qucik-add-modal').classList.remove('flex');
+}
+
+function submitQuickAdd() {
+  const title = document.getElementById('qa-title').value.trim();
+  const priority = document.getElementById('qa-priority').value;
+  const due = document.getElementById('qa-due').value;
+
+  if (!title) {return;}
+  activeBoard().tasks.push({id: uid(), title, status: 'todo', priority, due});
+  save();
+  renderBoard();
+  renderStats();
+  document.getElementById('qa-title').value ='';
+  document.getElementById('qa-due').value = '';
+  closeAddTask();
+}
