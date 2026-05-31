@@ -176,3 +176,66 @@ function cardHtml(t) {
     </div>
   </div>`;
 }
+
+function renderBoard() {
+  const b = activeBoard();
+  const board = document.getElementById('board');
+  if (!b) {
+    board.innerHTML = '';
+    return;
+  }
+  const totalDone = b.tasks.filter(t => t.status === 'done').length;
+  const total = b.tasks.length;
+
+  board.innerHTML = COLS.map(col => {
+    const tasks = b.tasks.filter(t => t.status === col.id);
+    const pct = col.id === 'done' && total > 0
+    ? Math.round(totalDone / total * 100) : 0;
+
+    return `  <div class="column w-[300px] shrink-0 bg-base-900 border border-base-600 rounded-xl overflow-hidden transition-all"
+         id="col-${col.id}"
+         ondragover="onDragOver(event,'${col.id}')"
+         ondragleave="onDragLeave(event,'${col.id}')"
+         ondrop="onDrop(event,'${col.id}')">
+ 
+      <div class="flex items-center justify-between px-4 pt-3.5 pb-3">
+        <div class="flex items-center gap-2 font-semibold text-sm">
+          <div class="w-2.5 h-2.5 rounded-full ${col.dot} shrink-0"></div>
+          ${col.label}
+          <span class="bg-base-700 border border-base-600 text-base-300 font-mono text-[11px] px-2 py-0.5 rounded-full">
+            ${tasks.length}
+          </span>
+        </div>
+        <button onclick="openColAddForm('${col.id}')" title="Add task"
+          class="w-7 h-7 flex items-center justify-center rounded-md text-base-400
+                 hover:bg-base-700 hover:text-base-300 transition-colors">
+          <i class="ti ti-plus text-base" aria-hidden="true"></i>
+        </button>
+      </div>
+ 
+      ${col.id === 'done' ? `
+        <div class="h-0.5 bg-base-700 mx-4 mb-2.5 rounded-full">
+          <div class="h-full bg-[#4ade80] rounded-full transition-all duration-500"
+               style="width:${pct}%"></div>
+        </div>` : ''}
+
+      <div class="px-3 pb-1 min-h-[80px] flex flex-col gap-2" id="list-${col.id}">
+        ${tasks.length === 0
+          ? `<div class="flex flex-col items-center justify-center py-7 gap-2 text-base-400 text-[13px]">
+               <i class="ti ti-inbox text-3xl opacity-40" aria-hidden="true"></i>
+               No tasks yet
+             </div>`
+          : tasks.map(t => cardHtml(t)).join('')}
+      </div>
+ 
+      <div class="px-3 pb-3 pt-1" id="add-area-${col.id}">
+        <button onclick="openColAddForm('${col.id}')"
+          class="w-full py-2 flex items-center justify-center gap-1.5 text-[13px] text-base-400
+                 border border-dashed border-base-600 rounded-lg
+                 hover:border-accent hover:text-accent hover:bg-accent/5 transition-colors">
+          <i class="ti ti-plus" aria-hidden="true"></i> Add task
+        </button>
+      </div>
+    </div>`;
+  }).join('');
+}
