@@ -76,3 +76,20 @@ function dueBadgeHtml (due) {
 
   return `<span class="flex items-center gap-0.5 font-mono text-[11px] ${cls}"><i class="ti ti-calendar text-[12px]" aria-hidden="true"></i>${label}</span>`;
 }
+
+function renderTabs() {
+  const el = document.getElementById('board-tabs');
+  el.innerHTML = boards.map(b => `
+   <button onclick="switchBoard('${b.id}')"
+      class="px-3.5 py-1.5 rounded-md text-[13px] font-medium whitespace-nowrap border transition-colors
+             ${b.id === activeBoardId
+               ? 'bg-base-700 border-base-600 text-base-100'
+               : 'border-transparent text-base-300 hover:bg-base-800 hover:text-base-100'}">
+      ${esc(b.name)}
+    </button>`).join('') +
+  `<button onclick="openNewBoardModal()" title="New board"
+     class="px-2.5 py-1.5 rounded-md text-[13px] border border-dashed border-base-500 text-base-400
+            hover:border-accent hover:text-accent transition-colors shrink-0">
+     <i class="ti ti-plus" aria-hidden="true"></i>
+   </button> `;
+}
