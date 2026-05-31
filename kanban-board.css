@@ -1,1 +1,44 @@
 body {font-family: 'DM', sans-serif;}
+
+.drag-over{
+  border-color: #6c7ef8;
+  box-shadow: 0 0 0 2px rgba(108,126,248,.2);
+}
+
+.card.dragging {
+  opacity: .4;
+  transform: rotate(1.5deg) scale(.98);
+}
+
+input[type="date"]::webkit-calendar-picker-indicator {
+  filter: invert(.5);
+}
+::-webkit-scrollbar{
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3d4a6b;
+  border-radius: 3px;
+}
+
+.card-title-input {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.45;
+  color: #e8eaf2;
+  background: #161b27;
+  border: 1px solid #6c7ef8;
+  border-radius: 4px;
+  padding: 2px 6px;
+  width: 100%;
+  font-family: 'DM Sans', sans-serif;
+  outline: none;
+  resize: none;
+  min-height: 44px;
+}
