@@ -264,3 +264,62 @@ document.addEventListener('click', () => {
     openDropdown = null;
   }
 });
+
+function deleteCard(id) {
+  const b = activeBoard();
+  b.tasks = b.tasks.filter(t => t.id !== id);
+  save();
+  renderBoard();
+  renderStats();
+}
+
+function moveCard(id, status) {
+  const t = activeBoard().tasks.find(t => t.id === id);
+  if (t) {
+    t.status = status;
+  }
+  save();
+  renderBoard();
+  renderStats();
+}
+
+function editCard(id) {
+  if (openDropdown) {
+    openDropdown.style.display = 'none';
+    openDropdown = null;
+  }
+  const task = activeBoard().tasks.find(t => t.id === id);
+  if (!task){return;}
+  const titleEl = document.getElementById('title-' +id);
+  const oldText = task.title;
+  titleEl.innerHTML = `<textarea class="card-title-input" id="edit-input-${id}">${esc(oldText)}</textarea>`;
+  const inp = document.getElementById('edit-input-' + id);
+  inp.focus();
+  inp.select();
+  inp.addEventListener('blur', () => commitEdit(id));
+  inp.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      inp.blur();
+    }
+    if (e.key === 'Escape') {
+      task.title = oldText;
+      save();
+      renderBoard();
+      renderStats();
+    }
+  });
+}
+
+function commitEdit(id) {
+  const inp = document.getElementById('edit-input-' + id);
+  if (!inp) {return;}
+  const val = inp.value.trim();
+  const task = activeBoard().tasks.find(t => t.id === id);
+  if (task && val) {
+    task.title = val;
+  }
+  save();
+  renderBoard();
+  renderStats();
+}
