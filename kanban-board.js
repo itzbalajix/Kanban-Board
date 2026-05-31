@@ -422,3 +422,25 @@ function submitQuickAdd() {
   document.getElementById('qa-due').value = '';
   closeAddTask();
 }
+
+function openNewBoardModal() {
+  document.getElementById('new-board-modal').classList.remove('hidden');
+  document.getElementById('new-board-modal').classList.add('flex');
+  document.getElementById('new-board-name').focus();
+}
+
+function closeNewBoardModal() {
+  document.getElementById('new-board-modal').classList.add('hidden');
+  document.getElementById('new-board-modal').classList.remove('flex');
+}
+
+function createBoard() {
+  const name = document.getElementById('new-board-name').value.trim();
+  if (!name) {return;}
+  const id = 'board' + Date.now();
+  boards.push({id, name, tasks: []});
+  save();
+  switchBoard(id);
+  closeNewBoardModal();
+  document.getElementById('new-board-name').value = '';
+}
