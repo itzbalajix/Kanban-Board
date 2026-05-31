@@ -247,3 +247,20 @@ function switchBoard(id) {
   renderBoard();
   renderStats();
 }
+
+function toggleDropdown(e, id) {
+  e.stopPropagation();
+  const dd = document.getElementById('dd-' + id);
+  if (openDropdown && openDropdown !== dd) {
+    openDropdown.style.display = 'none';
+  }
+  dd.style.display = dd.style.display === 'none' ? 'block' : 'none';
+  openDropdown = dd.style.display === 'block' ? dd : null;
+}
+
+document.addEventListener('click', () => {
+  if (openDropdown) {
+    openDropdown.style.display = 'none';
+    openDropdown = null;
+  }
+});
