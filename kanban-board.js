@@ -124,3 +124,55 @@ function renderStats() {
        <span>high priority</span>
      </div>`;
 }
+
+function cardHtml(t) {
+  const priCls = PRIORITY_CLASSES[t.priority] || PRIORITY_CLASSES.medium;
+  const moveItems = COLS
+  .filter(c => c.id !== t.status)
+  .map (c => `<button onclick="moveCard('${t.id}','${c.id}')"
+        class="drop-item flex items-center gap-2 w-full text-left px-3 py-2 text-[13px] text-base-300
+               hover:bg-base-700 hover:text-base-100 transition-colors">
+        <i class="ti ti-arrow-right text-[15px]" aria-hidden="true"></i> Move to ${c.label}
+      </button>`).join('');
+
+      return `<div class="card bg-base-800 border border-base-600 rounded-lg p-3 cursor-grab
+              hover:border-base-500 hover:bg-base-700 transition-colors animate-slideIn"
+       id="card-${t.id}"
+       draggable="true"
+       ondragstart="onDragStart(event,'${t.id}')"
+       ondragend="onDragEnd()">
+    <div class="flex items-start justify-between gap-2 mb-2">
+      <div class="text-[14px] font-medium leading-snug text-base-100 flex-1 break-words"
+           id="title-${t.id}">${esc(t.title)}</div>
+      <div class="relative shrink-0">
+        <button onclick="toggleDropdown(event,'${t.id}')"
+          aria-label="Card options"
+          class="w-6 h-6 flex items-center justify-center rounded text-base-400
+                 hover:bg-base-900 hover:text-base-300 transition-colors">
+          <i class="ti ti-dots-vertical text-base" aria-hidden="true"></i>
+        </button>
+        <div id="dd-${t.id}" style="display:none"
+          class="absolute right-0 top-7 z-30 bg-base-800 border border-base-500 rounded-lg
+                 min-w-[150px] overflow-hidden animate-popIn">
+          <button onclick="editCard('${t.id}')"
+            class="drop-item flex items-center gap-2 w-full text-left px-3 py-2 text-[13px] text-base-300
+                   hover:bg-base-700 hover:text-base-100 transition-colors">
+            <i class="ti ti-pencil text-[15px]" aria-hidden="true"></i> Edit
+          </button>
+          ${moveItems}
+          <button onclick="deleteCard('${t.id}')"
+            class="drop-item flex items-center gap-2 w-full text-left px-3 py-2 text-[13px] text-base-300
+                   hover:bg-red-400/10 hover:text-red-400 transition-colors">
+            <i class="ti ti-trash text-[15px]" aria-hidden="true"></i> Delete
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="flex items-center flex-wrap gap-1.5 mt-1.5">
+      <span class="text-[11px] font-mono font-medium px-2 py-0.5 rounded-full ${priCls}">
+        ${t.priority}
+      </span>
+      ${dueBadgeHtml(t.due)}
+    </div>
+  </div>`;
+}
