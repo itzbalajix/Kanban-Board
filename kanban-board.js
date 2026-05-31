@@ -444,3 +444,44 @@ function createBoard() {
   closeNewBoardModal();
   document.getElementById('new-board-name').value = '';
 }
+
+function onDragStart(e, id) {
+  dragSrcId = id;
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/plain', id);
+  setTimeout (() => document.getElementById('card-' + id)?.classList.add('dragging'), 0);
+}
+
+function onDragEnd() {
+  if (dragSrcId) {
+    document.getElementById('card-' + dragSrcId)?.classList.remove('dragging');
+  }
+  COLS.forEach(c => document.getElementById('col-' + c.id)?.classList.remove('drag-over'));
+  dragSrcId = null;
+}
+
+function onDragOver(e, colId) {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+  document.getElementById('col-' + colId).classList.add('drag-over');
+}
+
+function onDragLeave(e, colId) {
+  if (!e.currentTarget.contains(e.relatedTarget)){
+    document.getElementById('col-' + colId).classList.remove('drag-over');
+  }
+}
+
+function onDrop(e, colId) {
+  e.preventDefault();
+  const id = e.dataTransfer.getData('text/plain') || dragSrcId;
+  if (!id) {return;}
+  const task = activeBoard().tasks.find(t => t.id === id);
+  if (task && task.status !== colId) {
+    task.status = colId;
+  }
+  save();
+  renderBoard();
+  renderStats();
+  document.getElementById('col-' + colId)?.classList.remove('drag-over');
+}
