@@ -2,7 +2,7 @@ let boards = [];
 let activeBoardId = null;
 let dragSrcId = null;
 let openDropdown = null;
-let colFromOpen = null;
+let colFormOpen = null;
 
 const COLS = [
   {id: 'todo', label: 'Todo', dot: 'bg-[#6c7ef8]'},
@@ -322,4 +322,77 @@ function commitEdit(id) {
   save();
   renderBoard();
   renderStats();
+}
+
+function openColAddForm(colId) {
+  if (colFormOpen === colId) {
+    closeColFrom(colId);
+    return;
+  }
+  if (colFromOpen) {
+    closeColFrom(colFromOpen);
+  }
+  colFormOpen = colId;
+
+  document.getElementById('add-area-' + colId).innerHTML =`
+  <div class="bg-base-950 border border-base-500 rounded-lg p-3 animate-slideIn">
+      <textarea id="col-form-title-${colId}" rows="2" placeholder="Task title…"
+        class="w-full bg-transparent border-none text-[14px] text-base-100 placeholder-base-400
+               outline-none resize-none min-h-[52px] leading-relaxed"></textarea>
+      <div class="flex items-center gap-1.5 flex-wrap mt-2.5">
+        <select id="col-form-pri-${colId}"
+          class="bg-base-800 border border-base-600 rounded-md text-base-300 text-xs font-sans px-2 py-1 outline-none cursor-pointer">
+          <option value="low">Low</option>
+          <option value="medium" selected>Medium</option>
+          <option value="high">High</option>
+        </select>
+        <input type="date" id="col-form-due-${colId}"
+          class="bg-base-800 border border-base-600 rounded-md text-base-300 text-xs px-2 py-1 outline-none cursor-pointer" />
+        <div class="flex gap-1.5 ml-auto">
+          <button onclick="closeColForm('${colId}')"
+            class="px-2.5 py-1 text-[13px] text-base-400 border border-base-600 rounded-md hover:text-base-300 transition-colors">
+            Cancel
+          </button>
+          <button onclick="submitColForm('${colId}')"
+            class="px-3.5 py-1 text-[13px] font-medium bg-accent hover:bg-accent-hover text-white rounded-md transition-colors">
+            Add
+          </button>
+        </div>
+      </div>
+    </div>`;
+
+    const ta = document.getElementById('col-form-title-' + colId);
+    ta.focus();
+    ta.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        submitColForm(colId);
+      }
+    });
+}
+
+function closeColForm(colId) {
+  colFormOpen = null;
+  const area = document.getElementById('add-area-' + colId);
+  if (area) {
+    area.innerHTML = `
+    <button onclick="openColAddForm('${colId}')"
+      class="w-full py-2 flex items-center justify-center gap-1.5 text-[13px] text-base-400
+             border border-dashed border-base-600 rounded-lg
+             hover:border-accent hover:text-accent hover:bg-accent/5 transition-colors">
+      <i class="ti ti-plus" aria-hidden="true"></i> Add task
+    </button>`;
+  }
+}
+
+function submitColForm(colId) {
+  const title = document.getElementById('col-form-title-' + colId)?.value.trim();
+  const pri = document.getElementById('col-form-pri-' + colId)?.value || 'medium';
+  const due = document.getElementById('col-form-due-' + colId)?.value || '';
+  if (!title) {return;}
+  activeBoard().tasks.push({id: uid(), title, status: colId, priority: pri, due});
+  save();
+  renderBoard();
+  renderStats();
+  colFormOpen = null;
 }
