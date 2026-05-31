@@ -239,3 +239,11 @@ function renderBoard() {
     </div>`;
   }).join('');
 }
+
+function switchBoard(id) {
+  activeBoardId = id;
+  document.getElementById('board-name-display').textContent = activeBoard()?.name || '';
+  renderTabs();
+  renderBoard();
+  renderStats();
+}
