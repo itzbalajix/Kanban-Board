@@ -4,6 +4,9 @@ A responsive, fully client-side Kanban board built with vanilla JavaScript, Tail
 
 ![Kanban Board](https://img.shields.io/badge/status-active-brightgreen) ![HTML](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black) ![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?logo=tailwind-css&logoColor=white)
 
+🌐 Live Demo
+https://kanban-board-sigma-seven.vercel.app/
+
 ---
 
 ## ✨ Features
@@ -111,7 +114,8 @@ Tasks are stored as an array of objects inside each board:
 ## 📸 Screenshots
 ### 🖥️ Home UI
 
-![Home UI](./screenshots/Github-profile-finder-01.png)
+![Home UI](./screenshots/Kanban-board-SS-01.png)
+![Home UI](./screenshots/Kanban-board-SS-02.png)
 
 > Add screenshots here after cloning and running locally.
 
