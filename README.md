@@ -109,6 +109,9 @@ Tasks are stored as an array of objects inside each board:
 ---
 
 ## 📸 Screenshots
+### 🖥️ Home UI
+
+![Home UI](./screenshots/Github-profile-finder-01.png)
 
 > Add screenshots here after cloning and running locally.
 
