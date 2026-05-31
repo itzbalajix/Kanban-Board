@@ -93,3 +93,34 @@ function renderTabs() {
      <i class="ti ti-plus" aria-hidden="true"></i>
    </button> `;
 }
+
+function renderStats() {
+  const b = activeBoard();
+  if (!b) {
+    return;
+  }
+  const t = b.tasks;
+  const total = t.length;
+  const todo = t.filter(x => x.status === 'todo').length;
+  const doing = t.filter(x => x.status === 'doing').length;
+  const done = t.filter(x => x.status === 'done').length;
+  const high = t.filter(x => x.status === 'high').length;
+
+  const stat = (dot, count, label) => `
+  <div class="flex items-center gap-2">
+       <div class="w-2 h-2 rounded-full ${dot}"></div>
+       <strong class="text-base-100 font-semibold font-mono text-sm">${count}</strong>
+       <span>${label}</span>
+     </div>`;
+
+     document.getElementById('stats-bar').innerHTML =
+     stat('bg-base-400', total, 'total') +
+     stat('bg-[#6c7ef8]', todo, 'todo') +
+     stat('bg-[#f6a94a]', doing, 'in progress') +
+     stat('bg-[#4ade80]', done, 'done') +
+     `<div class="flex items-center gap-2 ml-auto">
+       <div class="w-2 h-2 rounded-full bg-red-400"></div>
+       <strong class="text-base-100 font-semibold font-mono text-sm">${high}</strong>
+       <span>high priority</span>
+     </div>`;
+}
